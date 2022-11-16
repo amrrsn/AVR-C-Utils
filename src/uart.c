@@ -43,6 +43,17 @@ uint8_t uart_init(uart_config_t* config) {
         default:
             return FAILURE;
     }
+
+    // set the data direction register for the UART pins
+    UART_DDR |= _BV(UART_TX_PIN);
+    UART_DDR &= ~_BV(UART_RX_PIN);
+
+    // set the pull-up resistor on the RX pin
+    UART_PORT |= _BV(UART_RX_PIN);
+
+    // set the TX pin to low
+    UART_PORT &= ~_BV(UART_TX_PIN);
+
     
     return SUCCESS;
 }

@@ -1,5 +1,21 @@
 #pragma once
 
+#ifndef UART_DDR
+#define UART_DDR DDRD
+#endif
+
+#ifndef UART_PORT
+#define UART_PORT PORTD
+#endif
+
+#ifndef UART_TX_PIN
+#define UART_TX_PIN PD1
+#endif
+
+#ifndef UART_RX_PIN
+#define UART_RX_PIN PD0
+#endif
+
 #ifndef UART_PARITY_NONE
 #define UART_PARITY_NONE 0x00
 #endif

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <avr/io.h>
 #include <avr/interrupt.h>
 #include "generic_defines.h"
 #include "uart_defines.h"

@@ -2,7 +2,6 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
 #include "generic_defines.h"
 
 #define MOSI PB3

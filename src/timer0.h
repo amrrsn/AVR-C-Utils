@@ -2,7 +2,6 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
 #include "generic_defines.h"
 
 uint8_t timer0_init(uint8_t tccr0a, uint8_t tccr0b, uint8_t ocr0a, uint8_t ocr0b);
