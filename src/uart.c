@@ -1,6 +1,6 @@
 #include "uart.h"
 
-uint8_t uart_init(uint16_t baudrate, uint8_t parityMode, uint8_t stopBitNum, uint8_t numDataBits, uint8_t asyncDoubleTransmitSpeed, uint8_t multiProcCom) {
+uint8_t uart_init(uart_config_t* config) {
     uart_tx_head = 0;
     uart_tx_tail = 0;
     uart_rx_head = 0;
@@ -9,25 +9,22 @@ uint8_t uart_init(uint16_t baudrate, uint8_t parityMode, uint8_t stopBitNum, uin
     uart_udre_callback = NULL;
     
     // Set baud rate
-    UBRR0H = (uint8_t)(baudrate>>8);
-    UBRR0L = (uint8_t)(baudrate);
+    UBRR0H = (uint8_t)(config->baud_rate>>8);
+    UBRR0L = (uint8_t)(config->baud_rate);
 
     UCSR0A = 0x00; // Clear the status register
-
-    if (asyncDoubleTransmitSpeed) {
-        UCSR0A |= _BV(U2X0);    // Set the double transmit speed bit
-    } if (multiProcCom) {
-        UCSR0A |= _BV(MPCM0);   // Set the multi-processor communication bit
-    }
+    UCSR0A |= (config->double_speed << U2X0);
+    UCSR0A |= (config->multi_proc << MPCM0);
     
+    UCSR0B = 0x00; // Clear the control register
     UCSR0B = _BV(RXEN0) | _BV(TXEN0); // Enable receiver and transmitter
     UCSR0B |= _BV(UDRIE0);  // Enable the data register empty interrupt
     UCSR0B |= _BV(TXCIE0);  // Enable the transmit complete interrupt
     UCSR0B |= _BV(RXCIE0);  // Enable the receive complete interrupt
     
     UCSR0C = 0x00;  // Clear the control register
-    UCSR0C = (parityMode << UPM00) | (stopBitNum << USBS0); // Set the parity mode and stop bit number
-    switch (numDataBits) {
+    UCSR0C = (config->parity << UPM00) | (config->stop_bits << USBS0); // Set the parity mode and stop bit number
+    switch (config->data_bits) {
         case 5:
             break;
         case 6:

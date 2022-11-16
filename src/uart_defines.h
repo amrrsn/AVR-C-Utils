@@ -1,23 +1,23 @@
 #pragma once
 
-#ifndef PARITY_NONE
-#define PARITY_NONE 0x00
+#ifndef UART_PARITY_NONE
+#define UART_PARITY_NONE 0x00
 #endif
 
-#ifndef PARITY_EVEN
-#define PARITY_EVEN 0x02
+#ifndef UART_PARITY_EVEN
+#define UART_PARITY_EVEN 0x02
 #endif
 
-#ifndef PARITY_ODD
-#define PARITY_ODD 0x03
+#ifndef UART_PARITY_ODD
+#define UART_PARITY_ODD 0x03
 #endif
 
-#ifndef STOP_BITS_1
-#define STOP_BITS_1 0x00
+#ifndef UART_STOP_BITS_1
+#define UART_STOP_BITS_1 0x00
 #endif
 
-#ifndef STOP_BITS_2
-#define STOP_BITS_2 0x01
+#ifndef UART_STOP_BITS_2
+#define UART_STOP_BITS_2 0x01
 #endif
 
 #ifndef UART_BAUD_SELECT
@@ -42,6 +42,14 @@
 
 #ifndef UART_TX_BUFFER_MASK
 #define UART_TX_BUFFER_MASK (UART_TX_BUFFER_SIZE - 1)
+#endif
+
+#if (UART_RX_BUFFER_SIZE & UART_RX_BUFFER_MASK)
+#error RX buffer size is not a power of 2
+#endif
+
+#if (UART_TX_BUFFER_SIZE & UART_TX_BUFFER_MASK)
+#error TX buffer size is not a power of 2
 #endif
 
 #ifndef UART_RX_INTERRUPT

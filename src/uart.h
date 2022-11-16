@@ -1,11 +1,20 @@
 #pragma once
 
-#include <avr/io.h>
 #include <avr/interrupt.h>
 #include "generic_defines.h"
 #include "uart_defines.h"
 
-uint8_t uart_init(uint16_t baudrate, uint8_t parityMode, uint8_t stopBitNum, uint8_t numDataBits, uint8_t asyncDoubleTransmitSpeed, uint8_t multiProcCom);
+// bit fields for uart configuration
+typedef struct {
+    uint16_t baud_rate : 12;
+    uint16_t stop_bits : 1;
+    uint16_t parity : 2;
+    uint16_t data_bits : 4;
+    uint16_t double_speed : 1;
+    uint16_t multi_proc : 1;
+} uart_config_t;
+
+uint8_t uart_init(uart_config_t* config);
 uint8_t uart_send(char* data, uint16_t length, callback_t callback);
 uint8_t uart_has_data(void);
 uint8_t uart_getchar(void);

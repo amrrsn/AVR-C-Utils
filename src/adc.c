@@ -5,9 +5,9 @@ uint8_t adc_has_data(void) {
 }
 
 uint8_t adc_init(adc_config_t *config) {
-    ADCSRA = (config->auto_trig_enable << ADATE) | (config->interrupt_enable << ADIE) | (config->prescaler << ADPS0);
-    ADCSRB = (config->auto_trig_src << ADTS0) | (config->multiplex_enable << ACME);
-    ADMUX = (config->refs << REFS0) | (config->left_adjust_result << ADLAR) | (config->channel << MUX0); // Set the ADC multiplexer register
+    ADCSRA = (config->auto_trigger << ADATE) | (config->interrupt << ADIE) | (config->prescaler << ADPS0);
+    ADCSRB = (config->trigger_src << ADTS0) | (config->multiplex_enable << ACME);
+    ADMUX = (config->ref << REFS0) | (config->left_adjust << ADLAR) | (config->channel << MUX0); // Set the ADC multiplexer register
     
     if (config->channel <= 5) {
         DIDR0 = _BV(config->channel); // Set the digital input disable register
